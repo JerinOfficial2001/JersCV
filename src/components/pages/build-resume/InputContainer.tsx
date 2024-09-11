@@ -12,18 +12,26 @@ import toast from "react-hot-toast";
 import Input from "./Input";
 import { Add, Delete, Edit } from "@mui/icons-material";
 import SkillsContainer from "./SkillContainer";
-import { InputData } from "@/types/model";
+import { useGlobalContext } from "@/utils/providers";
 
 type Props = {
-  inputDatas: any;
-  setinputDatas: React.Dispatch<React.SetStateAction<InputData>>;
+  // inputDatas: any;
+  // setinputDatas: React.Dispatch<React.SetStateAction<InputData>>;
   activeStage: string;
 };
-export default function InputContainer({
-  inputDatas,
-  setinputDatas,
-  activeStage,
-}: Props) {
+export default function InputContainer({ activeStage }: Props) {
+  const {
+    inputDatas,
+    setinputDatas,
+    learnedSkill,
+    setlearnedSkill,
+    experience,
+    setexperience,
+    skills,
+    setskills,
+    education,
+    seteducation,
+  } = useGlobalContext();
   const handleFormData = (key: string, value: any) => {
     setinputDatas((prev: any) => ({ ...prev, [key]: value }));
   };
@@ -34,30 +42,6 @@ export default function InputContainer({
     const { name, value } = e.target;
     handleFormData(name, value);
   };
-
-  const [education, seteducation] = useState({
-    from: "",
-    to: "",
-    institution: "",
-    department: "",
-    percentage: "",
-  });
-  const [skills, setskills] = useState<any>({
-    technical: "",
-    soft: "",
-    language: "",
-  });
-  const [experience, setexperience] = useState<any>({
-    from: "",
-    to: "",
-    company_name: "",
-    role: "",
-    description: "",
-    skills: [],
-    place: "",
-    state: "",
-  });
-  const [learnedSkill, setlearnedSkill] = useState<string>("");
   const handleEducationData = (key: string, value: any) => {
     seteducation((prev: any) => ({ ...prev, [key]: value }));
   };
@@ -156,7 +140,7 @@ export default function InputContainer({
       isvisible: "headers",
       name: "name",
       label: "Name",
-      placeholder: "Name",
+      placeholder: "eg : John",
       type: "text",
       onChange: handleOnchange,
       value: inputDatas.name,
@@ -166,7 +150,7 @@ export default function InputContainer({
       isvisible: "headers",
       name: "last_name",
       label: "Surname",
-      placeholder: "Sam",
+      placeholder: "eg : Sam",
       type: "text",
       onChange: handleOnchange,
       value: inputDatas.last_name,
@@ -176,7 +160,7 @@ export default function InputContainer({
       isvisible: "headers",
       name: "role",
       label: "Role",
-      placeholder: "Role",
+      placeholder: "eg : Mern stack developer",
       type: "text",
       onChange: handleOnchange,
       value: inputDatas.role,
@@ -186,7 +170,7 @@ export default function InputContainer({
       isvisible: "headers",
       name: "mail",
       label: "Email",
-      placeholder: "Email",
+      placeholder: "eg : john@gmail.com",
       type: "text",
       onChange: handleOnchange,
       value: inputDatas.mail,
@@ -196,7 +180,7 @@ export default function InputContainer({
       isvisible: "headers",
       name: "phone",
       label: "Mobile Number",
-      placeholder: "Mobile Number",
+      placeholder: "eg : 90****558",
       type: "number",
       onChange: handleOnchange,
       value: inputDatas.phone,
@@ -206,7 +190,7 @@ export default function InputContainer({
       isvisible: "headers",
       name: "linkedIn",
       label: "LinkedIn",
-      placeholder: "LinkedIn",
+      placeholder: "eg : https://www.linkedin.com/in/john-88****1a0",
       type: "text",
       onChange: handleOnchange,
       value: inputDatas.linkedIn,
@@ -216,7 +200,7 @@ export default function InputContainer({
       isvisible: "headers",
       name: "git",
       label: "GitHub",
-      placeholder: "GitHub",
+      placeholder: "eg : https://github.com/John_Sample",
       type: "text",
       onChange: handleOnchange,
       value: inputDatas.git,
@@ -226,7 +210,7 @@ export default function InputContainer({
       isvisible: "headers",
       name: "district",
       label: "District",
-      placeholder: "District",
+      placeholder: "eg : Erode",
       type: "text",
       onChange: handleOnchange,
       value: inputDatas.district,
@@ -236,7 +220,7 @@ export default function InputContainer({
       isvisible: "headers",
       name: "state",
       label: "State",
-      placeholder: "State",
+      placeholder: "eg : Tamilnadu",
       type: "text",
       onChange: handleOnchange,
       value: inputDatas.state,
@@ -246,7 +230,7 @@ export default function InputContainer({
       isvisible: "headers",
       name: "country",
       label: "Country",
-      placeholder: "Country",
+      placeholder: "eg : India",
       type: "text",
       onChange: handleOnchange,
       value: inputDatas.country,
@@ -267,7 +251,7 @@ export default function InputContainer({
       isvisible: "education",
       name: "education",
       label: "Education",
-      placeholder: "Education",
+      placeholder: "eg : BE",
       type: "text",
       onChange: handleOnchange,
       value: inputDatas.education,

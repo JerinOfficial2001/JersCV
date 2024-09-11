@@ -42,7 +42,7 @@ export default function Home() {
         </main>
         <div>
           <Image
-            className="dark:invert w-[300px] h-[350px] rounded-xl"
+            className="w-[300px] h-[380px] rounded-xl"
             src="/Resume.jpg"
             alt="Next.js logo"
             width={180}

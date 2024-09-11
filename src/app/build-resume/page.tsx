@@ -2,72 +2,74 @@
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import CVButton from "@/components/CVButton";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Stepper from "@/components/pages/build-resume/Stepper";
 import InputContainer from "@/components/pages/build-resume/InputContainer";
 import { InputData } from "@/types/model";
-type Props = { resumeData?: InputData | undefined };
+import { useGlobalContext } from "@/utils/providers";
+import toast from "react-hot-toast";
+import { Button } from "@mui/material";
+import PreviewModal from "@/components/pages/build-resume/PreviewModal";
+import { getTemplateByID } from "@/components/pages/build-resume/ResumeTemplates";
+type Props = {};
 interface Step {
   label: string;
 }
-export default function BuildResume({ resumeData }: Props) {
+export default function BuildResume({}: Props) {
   const router = useRouter();
-  const [activeStage, setactiveStage] = useState("headers");
-  const [isOpen, setIsOpen] = useState(false);
-  const [inputDatas, setinputDatas] = useState<any>({
-    _id: "",
-    name: "",
-    last_name: "",
-    role: "",
-    mail: "",
-    portfolio_link: "",
-    linkedIn: "",
-    phone: "",
-    git: "",
-    state: "",
-    district: "",
-    country: "",
-    about: "",
-    education: [],
-    skills: {
-      technical: [],
-      soft: [],
-      language: [],
-    },
-    experience: [],
-    isVisible: false,
-  });
-
-  useEffect(() => {
-    if (resumeData) {
-      setinputDatas({
-        _id: resumeData?._id,
-        name: resumeData?.name,
-        last_name: resumeData?.last_name,
-        role: resumeData?.role,
-        mail: resumeData?.mail,
-        portfolio_link: resumeData?.portfolio_link,
-        linkedIn: resumeData?.linkedIn,
-        phone: resumeData?.phone,
-        git: resumeData?.git,
-        state: resumeData?.state,
-        district: resumeData?.district,
-        country: resumeData?.country,
-        about: resumeData?.about,
-        education: resumeData?.education,
-        skills: resumeData?.skills,
-        experience: resumeData?.experience,
-        isVisible: false,
-      });
-    }
-  }, []);
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+  const { activeStage, setactiveStage, isOpen, setIsOpen, inputDatas, skills } =
+    useGlobalContext();
+  const [openPreviewModal, setopenPreviewModal] = useState(false);
+  // useEffect(() => {
+  //   if (resumeData) {
+  //     setinputDatas({
+  //       _id: resumeData?._id,
+  //       name: resumeData?.name,
+  //       last_name: resumeData?.last_name,
+  //       role: resumeData?.role,
+  //       mail: resumeData?.mail,
+  //       portfolio_link: resumeData?.portfolio_link,
+  //       linkedIn: resumeData?.linkedIn,
+  //       phone: resumeData?.phone,
+  //       git: resumeData?.git,
+  //       state: resumeData?.state,
+  //       district: resumeData?.district,
+  //       country: resumeData?.country,
+  //       about: resumeData?.about,
+  //       education: resumeData?.education,
+  //       skills: resumeData?.skills,
+  //       experience: resumeData?.experience,
+  //       isVisible: false,
+  //     });
+  //   }
+  // }, []);
   const [activeStep, setActiveStep] = React.useState(0);
-  console.log(activeStage);
-
-  const handleActiveStage = () => {
-    if (!isOpen && !isComplete) {
+  const handleClosePreviewModal = () => {
+    setopenPreviewModal(false);
+  };
+  const formValidation = (keys?: any) => {
+    const requiredFields = keys;
+    const isCompleted =
+      activeStage == "headers" ||
+      activeStage == "summary" ||
+      activeStage == "skills"
+        ? requiredFields.every((elem: any) =>
+            activeStage == "skills"
+              ? inputDatas[activeStage][elem].length > 0
+              : inputDatas[elem] != ""
+          )
+        : inputDatas[activeStage]?.length > 0;
+    if (isCompleted) {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      setIsOpen(true);
+      if (activeStage == "summary") router.push("/final-resume");
+    } else {
+      toast.error("Kindly fill all the field");
     }
+  };
+  const handleActiveStage = () => {
     switch (activeStage) {
       case "headers":
         {
@@ -75,7 +77,19 @@ export default function BuildResume({ resumeData }: Props) {
             setIsOpen(false);
             setactiveStage("experience");
           } else {
-            setIsOpen(true);
+            formValidation([
+              "name",
+              "email",
+              "last_name",
+              "role",
+              "email",
+              "phone",
+              "linkedIn",
+              "github",
+              "district",
+              "state",
+              "country",
+            ]);
           }
         }
         break;
@@ -85,7 +99,7 @@ export default function BuildResume({ resumeData }: Props) {
             setIsOpen(false);
             setactiveStage("education");
           } else {
-            setIsOpen(true);
+            formValidation();
           }
         }
         break;
@@ -95,7 +109,7 @@ export default function BuildResume({ resumeData }: Props) {
             setIsOpen(false);
             setactiveStage("skills");
           } else {
-            setIsOpen(true);
+            formValidation();
           }
         }
         break;
@@ -105,7 +119,7 @@ export default function BuildResume({ resumeData }: Props) {
             setIsOpen(false);
             setactiveStage("summary");
           } else {
-            setIsOpen(true);
+            formValidation(["technical", "soft", "language"]);
           }
         }
         break;
@@ -115,7 +129,7 @@ export default function BuildResume({ resumeData }: Props) {
             if (isOpen) {
               setIsOpen(false);
             } else {
-              setIsOpen(true);
+              formValidation(["summary"]);
             }
           }
         }
@@ -278,6 +292,7 @@ export default function BuildResume({ resumeData }: Props) {
             md: "auto",
           },
           transition: "all .3s",
+          zIndex: 3,
         }}
         className="sticky top-0 bg-[#383838] p-2 "
       >
@@ -311,8 +326,9 @@ export default function BuildResume({ resumeData }: Props) {
             gap: isOpen ? 3 : 0,
             marginBottom: isOpen ? 10 : 0,
             background: isOpen ? "" : "white",
+            position: { xs: "unset", md: "sticky" },
           }}
-          className="sticky p-3 top-0 text-sm text-center sm:text-left "
+          className="p-3 top-0 text-sm text-center sm:text-left "
           style={{ zIndex: 2 }}
         >
           <h1 className="text-[35px] font-extrabold leading-normal">
@@ -327,23 +343,18 @@ export default function BuildResume({ resumeData }: Props) {
               : contents[activeStage]?.description}
           </p>
         </Box>
-        {!isOpen && (
-          <InputContainer
-            activeStage={activeStage}
-            inputDatas={inputDatas}
-            setinputDatas={setinputDatas}
-          />
-        )}
+        {!isOpen && <InputContainer activeStage={activeStage} />}
 
         <div className="sticky bottom-0 flex flex-row justify-between items-center p-3">
           <CVButton
-            customStyle="bg-white text-[gray] border-[gray]"
+            // customStyle="bg-white text-[gray] border-[gray]"
             name={activeStage == "headers" && !isOpen ? "Cancel" : "Back"}
             onClick={handleBack}
           />
           <CVButton
             name={isOpen ? "Continue" : isComplete ? "Submit" : "Next"}
             onClick={handleActiveStage}
+            // disable={!allowNext}
           />
         </div>
       </Box>
@@ -359,8 +370,31 @@ export default function BuildResume({ resumeData }: Props) {
           justifyContent: "center",
           padding: 1,
         }}
-        className="sticky top-0"
+        className="sticky top-0 flex-col gap-2"
       >
+        <Box
+          sx={{
+            width: {
+              xs: "95%",
+              md: "70%",
+            },
+          }}
+          className="flex flex-row justify-between items-center"
+        >
+          <Button sx={{ textTransform: "none" }} size="large">
+            Change template
+          </Button>
+          <Button
+            onClick={() => {
+              setopenPreviewModal(true);
+            }}
+            sx={{ textTransform: "none" }}
+            size="large"
+          >
+            Preview
+          </Button>
+        </Box>
+
         <Box
           className="rounded-xl"
           sx={{
@@ -376,8 +410,15 @@ export default function BuildResume({ resumeData }: Props) {
             },
             boxShadow: "0px 0px 3px silver ",
           }}
-        ></Box>
+        >
+          {getTemplateByID(id, "small")}
+        </Box>
       </Box>
+      <PreviewModal
+        open={openPreviewModal}
+        handleClose={handleClosePreviewModal}
+        id={id}
+      />
     </Box>
   );
 }

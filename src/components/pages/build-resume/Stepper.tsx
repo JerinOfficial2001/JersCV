@@ -83,9 +83,9 @@ export default function VerticalLinearStepper({
                 {step.label}
               </StepLabel>
             </BootstrapTooltip>
-            <StepContent>
-              {/* <Typography>{step.description}</Typography> */}
-            </StepContent>
+            {/* <StepContent>
+              <Typography>{step.description}</Typography>
+            </StepContent> */}
           </Step>
         ))}
       </Stepper>

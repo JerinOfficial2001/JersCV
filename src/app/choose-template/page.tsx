@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -6,9 +7,13 @@ import Image from "next/image";
 import Typography from "@mui/material/Typography";
 import ResumeCard from "@/components/pages/choose-template/ResumeCard";
 import SurfaceLayout from "@/components/SurfaceLayout";
+import { Templates } from "@/components/pages/build-resume/ResumeTemplates";
+import { useGlobalContext } from "@/utils/providers";
+import { Check } from "lucide-react";
 type Props = {};
 
 export default function ChooseTemplate({}: Props) {
+  const { color, setcolor } = useGlobalContext();
   return (
     <SurfaceLayout>
       <div className="relative flex gap-8 flex-col w-[100%] items-center ">
@@ -79,6 +84,9 @@ export default function ChooseTemplate({}: Props) {
               ].map((elem, index) => {
                 return (
                   <Box
+                    onClick={() => {
+                      setcolor(elem.color == "white" ? "silver" : elem.color);
+                    }}
                     key={index}
                     className={`h-[30px] w-[30px] rounded-full p-[2px]`}
                     sx={{
@@ -97,8 +105,13 @@ export default function ChooseTemplate({}: Props) {
                         background: elem.color,
                         boxShadow: "0 .3rem .4rem rgba(0,0,0,.2)",
                       }}
-                      className={`h-[100%] w-[100%] rounded-full `}
-                    ></div>
+                      className={`h-[100%] w-[100%] rounded-full flex items-center justify-center`}
+                    >
+                      {color ==
+                        (elem.color == "white" ? "silver" : elem.color) && (
+                        <Check />
+                      )}
+                    </div>
                   </Box>
                 );
               })}
@@ -122,10 +135,10 @@ export default function ChooseTemplate({}: Props) {
             gap={2}
             sx={{ justifyContent: "center", width: "100%" }}
           >
-            {[1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13].map((elem, index) => {
+            {Templates.map((elem, index) => {
               return (
                 <Grid key={index} xs={12} md={3.5}>
-                  <ResumeCard />
+                  <ResumeCard resume={elem} />
                 </Grid>
               );
             })}
