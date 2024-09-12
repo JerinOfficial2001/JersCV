@@ -18,14 +18,18 @@ export default function PreviewModal({ open, handleClose, id }: Props) {
             sx={{
               width: {
                 xs: "95%",
-                md: "50%",
+                md: "55%",
               },
             }}
             className="flex flex-col items-center bg-white rounded-md relative pt-10 m-auto"
           >
             <IconButton
               onClick={handleClose}
-              className="absolute top-1 right-1"
+              sx={{
+                position: "absolute",
+                top: 1,
+                right: 1,
+              }}
             >
               <X />
             </IconButton>
@@ -41,7 +45,9 @@ export default function PreviewModal({ open, handleClose, id }: Props) {
               </div>
             </div>
             <div
-              style={{ borderRadius: "0 0 6px 6px " }}
+              style={{
+                borderRadius: "0 0 6px 6px ",
+              }}
               className="bg-[#383838] w-full p-10 flex flex-col items-center"
             >
               {getTemplateByID(id, "", true)}

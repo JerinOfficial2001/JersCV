@@ -3,6 +3,7 @@ import { useMediaQuery, useTheme } from "@mui/material";
 import { usePathname } from "next/navigation";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
+import { isCompleted } from "./methods";
 
 type Props = {
   children: any;
@@ -35,7 +36,36 @@ export default function Providers({ children }: Props) {
     },
     experience: [],
     isVisible: false,
+    tools: [],
+    certifications: [],
   });
+  const resetInputField = () => {
+    setinputDatas({
+      _id: "",
+      name: "",
+      last_name: "",
+      role: "",
+      mail: "",
+      portfolio_link: "",
+      linkedIn: "",
+      phone: "",
+      git: "",
+      state: "",
+      district: "",
+      country: "",
+      about: "",
+      education: [],
+      skills: {
+        technical: [],
+        soft: [],
+        language: [],
+      },
+      experience: [],
+      isVisible: false,
+      tools: [],
+      certifications: [],
+    });
+  };
   const [education, seteducation] = useState({
     from: "",
     to: "",
@@ -82,7 +112,7 @@ export default function Providers({ children }: Props) {
         from: "2019",
         to: "2023",
         institution: "abc college of Technology",
-        department: "Degree-Department",
+        department: "BE-MCT",
         percentage: "8.8",
       },
       {
@@ -144,6 +174,22 @@ export default function Providers({ children }: Props) {
         skills: ["Mern stack", "NextJs"],
       },
     ],
+    tools: (inputDatas.tools.length > 0 && inputDatas.tools) || [
+      "VS code",
+      "Android studio",
+      "Eclipse",
+    ],
+    certifications: (inputDatas.certifications.length > 0 &&
+      inputDatas.certifications) || [
+      {
+        certificate_for: "React",
+        issued_by: "HackerRank",
+      },
+      {
+        certificate_for: "MangoDB",
+        issued_by: "Udemy",
+      },
+    ],
   };
   const [color, setcolor] = useState("silver");
   const [activeStage, setactiveStage] = useState("");
@@ -154,10 +200,12 @@ export default function Providers({ children }: Props) {
   const isXs = useMediaQuery(theme.breakpoints.only("xs"));
   const isSm = useMediaQuery(theme.breakpoints.only("sm"));
   useEffect(() => {
-    if (pathname == "/build-resume" && !isOpen) {
-      setactiveStage("headers");
-    } else {
-      setactiveStage("");
+    if (!isCompleted()) {
+      if (pathname == "/build-resume" && !isOpen) {
+        setactiveStage("headers");
+      } else {
+        setactiveStage("");
+      }
     }
   }, [pathname]);
 
@@ -183,6 +231,7 @@ export default function Providers({ children }: Props) {
         setskills,
         education,
         seteducation,
+        resetInputField,
       }}
     >
       <Toaster position="top-center" />

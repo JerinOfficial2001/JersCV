@@ -11,7 +11,8 @@ export default function ResumeCard({ resume }: Props) {
       className="w-[100%] h-[390px] relative flex items-center justify-center p-1 rounded-xl"
       sx={{
         "&:hover": {
-          border: "4px solid #383838",
+          borderLeft: "4px solid #383838",
+          borderRight: "4px solid #383838",
         },
         transition: "all .1s",
       }}

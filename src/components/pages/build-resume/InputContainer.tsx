@@ -553,7 +553,7 @@ export default function InputContainer({ activeStage }: Props) {
                         >
                           <Typography
                             sx={{
-                              color: "white",
+                              color: "black",
                               marginLeft: "5px",
                               marginTop: "5px",
                             }}
@@ -680,7 +680,7 @@ export default function InputContainer({ activeStage }: Props) {
                             </div>
                             <Typography
                               sx={{
-                                color: "white",
+                                color: "black",
                                 marginLeft: "5px",
                                 marginTop: "5px",
                               }}
