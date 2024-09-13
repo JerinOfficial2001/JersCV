@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import ColorPalatte from "../choose-template/ColorPalatte";
 import { Grid } from "@mui/material";
 import { Templates } from "./ResumeTemplates";

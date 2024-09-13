@@ -5,7 +5,6 @@ import CVButton from "@/components/CVButton";
 import { useRouter, useSearchParams } from "next/navigation";
 import Stepper from "@/components/pages/build-resume/Stepper";
 import InputContainer from "@/components/pages/build-resume/InputContainer";
-import { InputData } from "@/types/model";
 import { useGlobalContext } from "@/utils/providers";
 import toast from "react-hot-toast";
 import { Button } from "@mui/material";
@@ -15,11 +14,10 @@ import Loader from "@/components/Loader";
 import Cookies from "js-cookie";
 import ChangeTemplateModal from "@/components/pages/build-resume/ChangeTemplateModel";
 
-type Props = {};
 interface Step {
   label: string;
 }
-export default function BuildResume({}: Props) {
+export default function BuildResume() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const resume_id = searchParams.get("id");
@@ -44,7 +42,7 @@ export default function BuildResume({}: Props) {
     if (!id) {
       setid(resume_id);
     }
-  }, [openChangeTemplateModal, openPreviewModal]);
+  }, [openChangeTemplateModal, openPreviewModal, id]);
 
   const handleClosePreviewModal = () => {
     setopenPreviewModal(false);

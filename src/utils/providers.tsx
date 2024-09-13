@@ -4,9 +4,10 @@ import { usePathname } from "next/navigation";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { isCompleted } from "./methods";
+import Loader from "@/components/Loader";
 
 type Props = {
-  children: any;
+  children: React.ReactNode;
 };
 const GlobalContext = createContext<any>({});
 export const useGlobalContext = () => {
@@ -208,36 +209,46 @@ export default function Providers({ children }: Props) {
       }
     }
   }, [pathname]);
+  const [isClient, setisClient] = useState(false);
+  useEffect(() => {
+    setisClient(true);
+  }, []);
 
   return (
-    <GlobalContext.Provider
-      value={{
-        resumeData,
-        isSm,
-        isXs,
-        color,
-        setcolor,
-        inputDatas,
-        setinputDatas,
-        activeStage,
-        setactiveStage,
-        isOpen,
-        setIsOpen,
-        learnedSkill,
-        setlearnedSkill,
-        experience,
-        setexperience,
-        skills,
-        setskills,
-        education,
-        seteducation,
-        resetInputField,
-        id,
-        setid,
-      }}
-    >
-      <Toaster position="top-center" />
-      {children}
-    </GlobalContext.Provider>
+    <>
+      {isClient ? (
+        <GlobalContext.Provider
+          value={{
+            resumeData,
+            isSm,
+            isXs,
+            color,
+            setcolor,
+            inputDatas,
+            setinputDatas,
+            activeStage,
+            setactiveStage,
+            isOpen,
+            setIsOpen,
+            learnedSkill,
+            setlearnedSkill,
+            experience,
+            setexperience,
+            skills,
+            setskills,
+            education,
+            seteducation,
+            resetInputField,
+            id,
+            setid,
+          }}
+        >
+          <Toaster position="top-center" />
+          {children}
+        </GlobalContext.Provider>
+      ) : (
+        <Loader />
+      )}
+    </>
   );
 }

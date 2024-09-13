@@ -1,9 +1,7 @@
-import { Box, Grid, IconButton, Modal, Portal } from "@mui/material";
+import { Box, IconButton, Modal, Portal } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Templates, getTemplateByID } from "./ResumeTemplates";
+import { getTemplateByID } from "./ResumeTemplates";
 import { X } from "lucide-react";
-import ColorPalatte from "../choose-template/ColorPalatte";
-import ResumeCard from "../choose-template/ResumeCard";
 import ResumeToolBar from "./ResumeToolBar";
 import { useGlobalContext } from "@/utils/providers";
 
@@ -13,7 +11,7 @@ type Props = {
 };
 
 export default function ChangeTemplateModal({ open, handleClose }: Props) {
-  const { id, setid } = useGlobalContext();
+  const { id } = useGlobalContext();
   const [resumeID, setresumeID] = useState("");
   useEffect(() => {
     setresumeID(id);

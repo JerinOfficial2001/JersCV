@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { Box } from "@mui/material";
-import { X } from "lucide-react";
 import { getTemplateByID } from "@/components/pages/build-resume/ResumeTemplates";
 import { useSearchParams } from "next/navigation";
 import SurfaceLayout from "@/components/SurfaceLayout";
@@ -11,9 +10,8 @@ import ReactToPrint from "react-to-print";
 import Loader from "@/components/Loader";
 import ResumeToolBar from "@/components/pages/build-resume/ResumeToolBar";
 import { useGlobalContext } from "@/utils/providers";
-type Props = {};
 
-export default function FinalResume({}: Props) {
+export default function FinalResume() {
   const searchParams = useSearchParams();
   const resume_id = searchParams.get("id");
   const { id } = useGlobalContext();

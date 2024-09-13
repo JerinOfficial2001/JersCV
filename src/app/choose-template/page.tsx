@@ -3,22 +3,17 @@ import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import SelectInput from "@/components/pages/choose-template/SelectInput";
-import Image from "next/image";
 import Typography from "@mui/material/Typography";
 import ResumeCard from "@/components/pages/choose-template/ResumeCard";
 import SurfaceLayout from "@/components/SurfaceLayout";
 import { Templates } from "@/components/pages/build-resume/ResumeTemplates";
 import { useGlobalContext } from "@/utils/providers";
-import { Check } from "lucide-react";
 import Loader from "@/components/Loader";
 import Cookies from "js-cookie";
 import ColorPalatte from "@/components/pages/choose-template/ColorPalatte";
 
-type Props = {};
-
-export default function ChooseTemplate({}: Props) {
-  const { color, setcolor, setinputDatas, resetInputField } =
-    useGlobalContext();
+export default function ChooseTemplate() {
+  const { resetInputField } = useGlobalContext();
   const [isClient, setisClient] = useState(false);
   useEffect(() => {
     setisClient(true);

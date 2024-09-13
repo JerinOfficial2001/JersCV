@@ -7,7 +7,10 @@ import {
 } from "@/components/ui/select";
 import React from "react";
 
-type Props = { menus: any; label: string };
+interface Menus {
+  value: string;
+}
+type Props = { menus: Menus[]; label: string };
 
 export default function SelectInput({ menus, label }: Props) {
   return (
@@ -16,7 +19,7 @@ export default function SelectInput({ menus, label }: Props) {
         <SelectValue placeholder={label} />
       </SelectTrigger>
       <SelectContent>
-        {menus.map((elem: any, index: number) => {
+        {menus.map((elem: Menus, index: number) => {
           return (
             <SelectItem key={index} value={elem?.value}>
               {elem?.value}

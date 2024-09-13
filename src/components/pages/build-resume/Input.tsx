@@ -4,8 +4,8 @@ type Props = {
   label: string;
   type: string;
   name: string;
-  value: any;
-  onChange: any;
+  value: string;
+  onChange: () => void | undefined;
   placeholder?: string;
   height?: string;
   width?: string;

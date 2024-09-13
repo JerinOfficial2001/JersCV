@@ -10,7 +10,7 @@ type Props = {
 };
 
 export default function PreviewModal({ open, handleClose }: Props) {
-  const { id, setid } = useGlobalContext();
+  const { id } = useGlobalContext();
   return (
     <Portal>
       <Modal open={open} onClose={handleClose}>
