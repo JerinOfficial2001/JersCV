@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import CVButton from "@/components/CVButton";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -13,6 +13,7 @@ import PreviewModal from "@/components/pages/build-resume/PreviewModal";
 import { getTemplateByID } from "@/components/pages/build-resume/ResumeTemplates";
 import Loader from "@/components/Loader";
 import Cookies from "js-cookie";
+import ChangeTemplateModal from "@/components/pages/build-resume/ChangeTemplateModel";
 
 type Props = {};
 interface Step {
@@ -21,7 +22,7 @@ interface Step {
 export default function BuildResume({}: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+  const resume_id = searchParams.get("id");
   const {
     setinputDatas,
     activeStage,
@@ -29,16 +30,27 @@ export default function BuildResume({}: Props) {
     isOpen,
     setIsOpen,
     inputDatas,
+    id,
+    setid,
   } = useGlobalContext();
   const [openPreviewModal, setopenPreviewModal] = useState(false);
+  const [openChangeTemplateModal, setopenChangeTemplateModal] = useState(false);
   const [activeStep, setActiveStep] = React.useState(0);
   const [isClient, setisClient] = useState(false);
   useEffect(() => {
     setisClient(true);
   }, []);
+  useEffect(() => {
+    if (!id) {
+      setid(resume_id);
+    }
+  }, [openChangeTemplateModal, openPreviewModal]);
 
   const handleClosePreviewModal = () => {
     setopenPreviewModal(false);
+  };
+  const handleCloseChangeTemplateModal = () => {
+    setopenChangeTemplateModal(false);
   };
   const formValidation = (keys?: any) => {
     const requiredFields = keys;
@@ -60,6 +72,7 @@ export default function BuildResume({}: Props) {
       } else {
         setIsOpen(true);
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        handleClick();
       }
     } else {
       toast.error("Kindly fill all the field");
@@ -294,6 +307,17 @@ export default function BuildResume({}: Props) {
       setActiveStep(4);
     }
   }, [isCompleted]);
+  const [animationClass, setAnimationClass] = useState("");
+  const [bounceAnimationClass, setBounceAnimationClass] = useState("");
+
+  const handleClick = () => {
+    setAnimationClass("animate__animated animate__fadeInDown");
+    setBounceAnimationClass("animate__animated animate__zoomIn");
+    setTimeout(() => {
+      setAnimationClass("");
+      setBounceAnimationClass("");
+    }, 3000);
+  };
 
   return (
     <>
@@ -360,17 +384,22 @@ export default function BuildResume({}: Props) {
               className="p-3 top-0 text-sm text-center sm:text-left "
               style={{ zIndex: 2 }}
             >
-              <h1 className="text-[35px] font-extrabold leading-normal">
-                {isOpen
-                  ? contents["active" + activeStage]?.title
-                  : contents[activeStage]?.title}
-              </h1>
-
-              <p className="mt-2 font-[family-name:var(--font-geist-mono)]">
-                {isOpen
-                  ? contents["active" + activeStage]?.description
-                  : contents[activeStage]?.description}
-              </p>
+              <Suspense>
+                <h1
+                  className={`${animationClass} animate__delay-1s text-[35px] font-extrabold leading-normal`}
+                >
+                  {isOpen
+                    ? contents["active" + activeStage]?.title
+                    : contents[activeStage]?.title}
+                </h1>
+                <p
+                  className={`${animationClass} animate__delay-1.5s mt-2 font-[family-name:var(--font-geist-mono)]`}
+                >
+                  {isOpen
+                    ? contents["active" + activeStage]?.description
+                    : contents[activeStage]?.description}
+                </p>
+              </Suspense>
             </Box>
             {!isOpen && <InputContainer activeStage={activeStage} />}
 
@@ -387,6 +416,7 @@ export default function BuildResume({}: Props) {
               />
             </div>
           </Box>
+
           <Box
             sx={{
               width: {
@@ -398,7 +428,7 @@ export default function BuildResume({}: Props) {
               alignItems: "center",
               justifyContent: "center",
             }}
-            className="sticky top-0 flex-col gap-2"
+            className={`${bounceAnimationClass} animate__delay-2s sticky top-0 flex-col gap-2`}
           >
             <Box
               sx={{
@@ -409,7 +439,13 @@ export default function BuildResume({}: Props) {
               }}
               className="flex flex-row justify-between items-center"
             >
-              <Button sx={{ textTransform: "none" }} size="large">
+              <Button
+                onClick={() => {
+                  setopenChangeTemplateModal(true);
+                }}
+                sx={{ textTransform: "none" }}
+                size="large"
+              >
                 Change template
               </Button>
               <Button
@@ -442,13 +478,16 @@ export default function BuildResume({}: Props) {
                 overflowY: "auto",
               }}
             >
-              {getTemplateByID(id, "small")}
+              {getTemplateByID(id || resume_id, "small")}
             </Box>
           </Box>
           <PreviewModal
             open={openPreviewModal}
             handleClose={handleClosePreviewModal}
-            id={id}
+          />
+          <ChangeTemplateModal
+            open={openChangeTemplateModal}
+            handleClose={handleCloseChangeTemplateModal}
           />
         </Box>
       ) : (

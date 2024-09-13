@@ -2,9 +2,15 @@
 import SurfaceLayout from "@/components/SurfaceLayout";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import Cookies from "js-cookie";
 
 export default function Home() {
   const router = useRouter();
+  useEffect(() => {
+    Cookies.remove("resumeData");
+    Cookies.remove("completed");
+  }, []);
   return (
     <SurfaceLayout>
       <div className="w-full flex flex-row items-center justify-center gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">

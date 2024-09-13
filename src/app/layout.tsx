@@ -6,8 +6,7 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import Providers from "@/utils/providers";
-import Image from "next/image";
-import Box from "@mui/material/Box";
+import "animate.css";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

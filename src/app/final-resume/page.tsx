@@ -5,32 +5,36 @@ import { X } from "lucide-react";
 import { getTemplateByID } from "@/components/pages/build-resume/ResumeTemplates";
 import { useSearchParams } from "next/navigation";
 import SurfaceLayout from "@/components/SurfaceLayout";
-import ToolBar from "@/components/pages/final-resume/ToolBar";
 import { Download, Email, Print } from "@mui/icons-material";
 import CVButton from "@/components/CVButton";
 import ReactToPrint from "react-to-print";
 import Loader from "@/components/Loader";
+import ResumeToolBar from "@/components/pages/build-resume/ResumeToolBar";
+import { useGlobalContext } from "@/utils/providers";
 type Props = {};
 
 export default function FinalResume({}: Props) {
   const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+  const resume_id = searchParams.get("id");
+  const { id } = useGlobalContext();
+
   const printRef = useRef<HTMLDivElement | null>(null);
   const [isClient, setisClient] = useState(false);
   useEffect(() => {
     setisClient(true);
   }, []);
-  console.log(printRef.current, "printRef");
 
   return (
     <SurfaceLayout bg="#383838">
       {isClient ? (
         <div className="w-full flex flex-row justify-center items-start bg-[#383838] p-5 relative">
-          <div className="w-[25%]">
-            <ToolBar />
+          <div className="w-[25%] h-full sticky top-20">
+            <ResumeToolBar />
           </div>
           <div className="w-[50%]">
-            {getTemplateByID(id, "", true, printRef)}
+            <div ref={printRef}>
+              {getTemplateByID(id || resume_id, "", true)}
+            </div>
           </div>
           <div className="w-[25%] flex flex-col items-center justify-start sticky top-20 gap-5">
             <div className="w-full flex flex-row items-center justify-evenly ">

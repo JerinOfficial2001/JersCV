@@ -194,7 +194,7 @@ export default function Providers({ children }: Props) {
   const [color, setcolor] = useState("silver");
   const [activeStage, setactiveStage] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-
+  const [id, setid] = useState("");
   const theme = useTheme();
   const pathname = usePathname();
   const isXs = useMediaQuery(theme.breakpoints.only("xs"));
@@ -232,6 +232,8 @@ export default function Providers({ children }: Props) {
         education,
         seteducation,
         resetInputField,
+        id,
+        setid,
       }}
     >
       <Toaster position="top-center" />

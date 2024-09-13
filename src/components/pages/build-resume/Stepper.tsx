@@ -28,11 +28,12 @@ export default function VerticalLinearStepper({
   return (
     <Box
       sx={{
-        width: { xs: "100%", md: isOpen ? 300 : "auto" },
+        width: { xs: "100%", md: isOpen ? 300 : 80 },
         height: {
           xs: !isOpen ? 60 : "auto",
           sm: "100%",
         },
+        transition: "width .3s ease-in-out",
       }}
       className="flex items-center justify-center "
     >

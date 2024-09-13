@@ -12,6 +12,7 @@ import { useGlobalContext } from "@/utils/providers";
 import { Check } from "lucide-react";
 import Loader from "@/components/Loader";
 import Cookies from "js-cookie";
+import ColorPalatte from "@/components/pages/choose-template/ColorPalatte";
 
 type Props = {};
 
@@ -23,6 +24,7 @@ export default function ChooseTemplate({}: Props) {
     setisClient(true);
     resetInputField();
     Cookies.remove("resumeData");
+    Cookies.remove("completed");
   }, []);
 
   return (
@@ -83,50 +85,7 @@ export default function ChooseTemplate({}: Props) {
               </div>
               <div className="flex flex-row items-center justify-center gap-1 ">
                 <p className="text-[15px] font-bold">Color:</p>
-                {[
-                  { id: 1, color: "white" },
-                  { id: 2, color: "#34393e" },
-                  { id: 3, color: "#af9b94" },
-                  { id: 4, color: "#144181" },
-                  { id: 5, color: "#4585dd" },
-                  { id: 6, color: "#00a4c1" },
-                  { id: 7, color: "#2c806e" },
-                  { id: 8, color: "#f6911e" },
-                  { id: 9, color: "#cb454e" },
-                ].map((elem, index) => {
-                  return (
-                    <Box
-                      onClick={() => {
-                        setcolor(elem.color == "white" ? "silver" : elem.color);
-                      }}
-                      key={index}
-                      className={`h-[30px] w-[30px] rounded-full p-[2px]`}
-                      sx={{
-                        "&:hover": {
-                          border: `2px solid ${
-                            elem.color == "white" ? "silver" : elem.color
-                          }`,
-                        },
-                      }}
-                      // style={{
-                      //   boxShadow: "0 .3rem .4rem rgba(0,0,0,.2)",
-                      // }}
-                    >
-                      <div
-                        style={{
-                          background: elem.color,
-                          boxShadow: "0 .3rem .4rem rgba(0,0,0,.2)",
-                        }}
-                        className={`h-[100%] w-[100%] rounded-full flex items-center justify-center`}
-                      >
-                        {color ==
-                          (elem.color == "white" ? "silver" : elem.color) && (
-                          <Check />
-                        )}
-                      </div>
-                    </Box>
-                  );
-                })}
+                <ColorPalatte />
               </div>
             </Box>
           </div>
@@ -154,7 +113,7 @@ export default function ChooseTemplate({}: Props) {
               {Templates.map((elem, index) => {
                 return (
                   <Grid key={index} xs={12} md={3.5}>
-                    <ResumeCard resume={elem} />
+                    <ResumeCard resume={elem} hideoverflow={true} />
                   </Grid>
                 );
               })}

@@ -2,14 +2,15 @@ import { Box, IconButton, Modal, Portal } from "@mui/material";
 import React from "react";
 import { getTemplateByID } from "./ResumeTemplates";
 import { X } from "lucide-react";
+import { useGlobalContext } from "@/utils/providers";
 
 type Props = {
   open: boolean;
   handleClose: any;
-  id: any;
 };
 
-export default function PreviewModal({ open, handleClose, id }: Props) {
+export default function PreviewModal({ open, handleClose }: Props) {
+  const { id, setid } = useGlobalContext();
   return (
     <Portal>
       <Modal open={open} onClose={handleClose}>

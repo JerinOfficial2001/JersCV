@@ -120,7 +120,7 @@ const ListStepContainer = ({
         </div>
         {header}
       </div>
-      <div className="flex flex-row gap-1">
+      <div className="flex flex-row gap-1 ">
         <Divider
           orientation="vertical"
           sx={{
@@ -140,10 +140,12 @@ const RightColCardLayout = ({
   name,
   arr,
   isExpanded,
+  xs,
 }: {
   isResponsive: boolean;
   isHighlighted: boolean;
   isExpanded?: boolean;
+  xs?: boolean;
   name: string;
   arr: [];
 }) => {
@@ -158,15 +160,15 @@ const RightColCardLayout = ({
               background: "#ffa5001a",
               padding: 5,
               borderRadius: 10,
-              gap: isExpanded ? 10 : isResponsive ? 25 : 30,
+              gap: xs ? 1 : isExpanded ? 10 : isResponsive ? 25 : 30,
             },
           }
         : {
             style: {
-              gap: isExpanded ? 10 : isResponsive ? 25 : 30,
+              gap: xs ? 1 : 30,
             },
           })}
-      className={`w-full flex items-start justify-center flex-col mt-2 `}
+      className={`w-full flex items-start justify-center flex-col mt-2 h-[auto]`}
     >
       <p
         className={`${
@@ -178,113 +180,116 @@ const RightColCardLayout = ({
       >
         {name}
       </p>
-      {arr.map((elem: any, index: number) => {
-        return (
-          <ListStepContainer
-            key={index}
-            data={
-              <div
-                className={`w-full mb-${
-                  isResponsive ? 0 : 3
-                } flex flex-col gap-1`}
-              >
-                <div className="w-full flex flex-row items-center justify-between">
-                  <p
-                    className={`${
-                      isResponsive ? styles.smallText : styles.text
-                    } font-bold`}
-                  >
-                    {elem.company_name}
-                  </p>
-                  <p
-                    className={`${
-                      isResponsive ? styles.smallText : styles.text
-                    } font-bold`}
-                  >
-                    {elem.from.slice(0, 4)}-{elem.to.slice(0, 4)}
-                  </p>
-                </div>
-                <div className="w-full flex flex-row items-center justify-start gap-1">
-                  <p
-                    className={`${
-                      isResponsive ? styles.smallText : styles.text
-                    }`}
-                  >
-                    {elem.place}
-                  </p>
-                  <span className={`${isResponsive ? styles.smallText : ""}`}>
-                    ,
-                  </span>
-                  <p
-                    className={`${
-                      isResponsive ? styles.smallText : styles.text
-                    }`}
-                  >
-                    {elem.state}{" "}
-                  </p>
-                </div>
-                <ul
-                  className={`list-disc ml-5 ${
-                    isResponsive ? styles.smallText : ""
-                  }`}
+      <div className="h-[-webkit-fill-available] flex flex-col justify-between items-center">
+        {arr.map((elem: any, index: number) => {
+          return (
+            <ListStepContainer
+              key={index}
+              data={
+                <div
+                  className={`w-full mb-${
+                    isResponsive ? 0 : 3
+                  } flex flex-col gap-1 items-baseline`}
                 >
-                  <li>
+                  <div className="w-full flex flex-row items-center justify-between">
+                    <p
+                      className={`${
+                        isResponsive ? styles.smallText : styles.text
+                      } font-bold`}
+                    >
+                      {elem.company_name}
+                    </p>
+                    <p
+                      className={`${
+                        isResponsive ? styles.smallText : styles.text
+                      } font-bold`}
+                    >
+                      {elem.from.slice(0, 4)}-{elem.to.slice(0, 4)}
+                    </p>
+                  </div>
+                  <div className="w-full flex flex-row items-center justify-start gap-1">
                     <p
                       className={`${
                         isResponsive ? styles.smallText : styles.text
                       }`}
                     >
-                      {elem.description}
+                      {elem.place}
                     </p>
-                  </li>
-                  <li>
-                    <div
+                    <span className={`${isResponsive ? styles.smallText : ""}`}>
+                      ,
+                    </span>
+                    <p
                       className={`${
                         isResponsive ? styles.smallText : styles.text
-                      } w-full flex gap-1`}
+                      }`}
                     >
-                      <span
+                      {elem.state}{" "}
+                    </p>
+                  </div>
+                  <ul
+                    className={`list-disc ml-5 ${
+                      isResponsive ? styles.smallText : ""
+                    }`}
+                  >
+                    <li>
+                      <p
                         className={`${
                           isResponsive ? styles.smallText : styles.text
-                        } font-bold`}
+                        }`}
                       >
-                        Learned Skill :
-                      </span>
-                      {SkillsComponent(elem.skills, isResponsive)}
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            }
-            isResponsive={isResponsive}
-            header={
-              <p
-                className={`${
-                  isResponsive ? styles.smallText : styles.text
-                } font-bold`}
-              >
-                {elem.role}
-              </p>
-            }
-          />
-        );
-      })}
+                        {elem.description}
+                      </p>
+                    </li>
+                    <li>
+                      <div
+                        className={`${
+                          isResponsive ? styles.smallText : styles.text
+                        } w-full flex gap-1`}
+                      >
+                        <span
+                          className={`${
+                            isResponsive ? styles.smallText : styles.text
+                          } font-bold`}
+                        >
+                          Learned Skill :
+                        </span>
+                        {SkillsComponent(elem.skills, isResponsive)}
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              }
+              isResponsive={isResponsive}
+              header={
+                <p
+                  className={`${
+                    isResponsive ? styles.smallText : styles.text
+                  } font-bold`}
+                >
+                  {elem.role}
+                </p>
+              }
+            />
+          );
+        })}
+      </div>
     </div>
   );
 };
-export const TemplateOne = ({ size, notRes, isNotMarked, ref }: any) => {
+export const TemplateOne = ({ size, notRes, isNotMarked, ref, xs }: any) => {
   const { resumeData, isxs, color, activeStage, isOpen } = useGlobalContext();
 
   const data = resumeData;
   let isResponsive = !notRes && (size || isxs);
   const isHighlighted = !isNotMarked && !isOpen;
+
   return (
     <div
       ref={ref}
       className={`w-full h-full bg-white flex items-center justify-start flex-col`}
       style={{
-        padding: isResponsive ? "20px" : "70px",
-        minHeight: isResponsive ? "100%" : "1100px",
+        padding: xs ? "1px" : isResponsive ? "20px" : "70px",
+        minHeight: isResponsive || xs ? "100%" : "1100px",
       }}
     >
       <div
@@ -399,7 +404,9 @@ export const TemplateOne = ({ size, notRes, isNotMarked, ref }: any) => {
       </div>
       {/* //*Objective */}
       <div
-        className={`w-full flex items-start justify-center gap-1 flex-col mt-2`}
+        className={`w-full flex items-start justify-center gap-${
+          xs ? 0 : 1
+        } flex-col mt-${xs ? 0 : 2}`}
         {...(activeStage == "summary" &&
           isHighlighted && {
             style: {
@@ -429,7 +436,9 @@ export const TemplateOne = ({ size, notRes, isNotMarked, ref }: any) => {
       </div>
       {/* //*Education */}
       <div
-        className={`w-full flex items-start justify-center gap-1 flex-col mt-2`}
+        className={`w-full flex items-start justify-center gap-${
+          xs ? 0 : 1
+        } flex-col mt-${xs ? 0 : 2}`}
         {...(activeStage == "education" &&
           isHighlighted && {
             style: {
@@ -505,7 +514,9 @@ export const TemplateOne = ({ size, notRes, isNotMarked, ref }: any) => {
       </div>
       {/* //*Skills */}
       <div
-        className={`w-full flex items-start justify-center gap-1 flex-col mt-2`}
+        className={`w-full flex items-start justify-center gap-${
+          xs ? 0 : 1
+        } flex-col mt-${xs ? 0 : 2}`}
         {...(activeStage == "skills" &&
           isHighlighted && {
             style: {
@@ -582,7 +593,9 @@ export const TemplateOne = ({ size, notRes, isNotMarked, ref }: any) => {
       </div>
       {/* //*Experience */}
       <div
-        className={`w-full flex items-start justify-center gap-1 flex-col mt-2`}
+        className={`w-full flex items-start justify-center gap-${
+          xs ? 0 : 1
+        } flex-col mt-${xs ? 0 : 2}`}
         {...(activeStage == "experience" &&
           isHighlighted && {
             style: {
@@ -688,17 +701,7 @@ export const TemplateOne = ({ size, notRes, isNotMarked, ref }: any) => {
     </div>
   );
 };
-export const TemplateTwo = ({
-  size,
-  notRes,
-  isNotMarked,
-  ref,
-}: {
-  ref: HTMLDivElement | null;
-  size: any;
-  notRes: any;
-  isNotMarked: any;
-}) => {
+export const TemplateTwo = ({ size, notRes, isNotMarked, ref, xs }: any) => {
   const { resumeData, isxs, color, activeStage, isOpen } = useGlobalContext();
   const data = resumeData;
   let isResponsive = !notRes && (size || isxs);
@@ -724,32 +727,40 @@ export const TemplateTwo = ({
     return () => window.removeEventListener("resize", checkHeight);
   }, [isOpen]);
   const experiences =
-    isHeightExceeded && data.experience.length >= 3
-      ? data.experience.slice(0, 3)
+    isHeightExceeded && data.experience.length >= 4
+      ? data.experience.slice(0, 4)
       : data.experience;
   const projects =
-    isHeightExceeded && experiences.length == 3
+    isHeightExceeded && experiences.length == 4
       ? []
-      : experiences.length == 2 && data.experience.length > 1
+      : experiences.length == 3 && data.experience.length > 2
       ? data.experience.slice(0, 1)
-      : experiences.length == 1 && data.experience.length > 2
+      : experiences.length == 2 && data.experience.length > 3
       ? data.experience.slice(0, 2)
-      : experiences.length == 0 && data.experience.length > 3
+      : experiences.length == 1 && data.experience.length > 4
       ? data.experience.slice(0, 3)
+      : experiences.length == 0 && data.experience.length > 5
+      ? data.experience.slice(0, 4)
+      : experiences.length == 4
+      ? []
       : data.experience;
   const excessExperiences =
-    isHeightExceeded && data.experience.length >= 3
-      ? data.experience.slice(3)
+    isHeightExceeded && data.experience.length >= 4
+      ? data.experience.slice(4)
       : [];
   const excessProjects =
-    isHeightExceeded && experiences.length == 3
+    isHeightExceeded && experiences.length == 4
       ? data.experience
-      : experiences.length == 2 && data.experience.length > 1
+      : experiences.length == 3 && data.experience.length > 2
       ? data.experience.slice(1)
-      : experiences.length == 1 && data.experience.length > 2
+      : experiences.length == 2 && data.experience.length > 3
       ? data.experience.slice(2)
-      : experiences.length == 0 && data.experience.length > 3
+      : experiences.length == 1 && data.experience.length > 4
       ? data.experience.slice(3)
+      : experiences.length == 0 && data.experience.length > 5
+      ? data.experience.slice(4)
+      : experiences.length == 4
+      ? data.experience
       : [];
 
   return (
@@ -757,7 +768,7 @@ export const TemplateTwo = ({
       ref={componentRef || ref}
       className={`w-full h-full bg-white flex items-center justify-start flex-col`}
       style={{
-        padding: isResponsive ? "20px" : "70px",
+        padding: isResponsive ? (xs ? 0 : "20px") : "70px",
         minHeight: isResponsive ? "100%" : "1100px",
       }}
     >
@@ -773,7 +784,7 @@ export const TemplateTwo = ({
           })}
         className="w-full flex flex-row items-center justify-around"
       >
-        <div className={`flex flex-col items-start justify-center `}>
+        <div className={`flex flex-col items-start justify-center`}>
           <h1
             style={{
               color: color,
@@ -879,11 +890,16 @@ export const TemplateTwo = ({
           sx={{ width: "100%", borderWidth: "1.5px", borderColor: color }}
         />
       </div>
-      <div className="w-full flex flex-row justify-between items-start gap-3">
+      <div
+        style={{
+          height: isResponsive ? "80%" : "800px",
+        }}
+        className="w-full flex flex-row justify-between items-start gap-3"
+      >
         {/* //*LeftCol */}
         <div
-          className="flex flex-col items-start w-[40%] h-full"
-          // style={{ gap: isResponsive ? "0px" : "20px" }}
+          className="flex flex-col items-start w-[40%] justify-between h-full"
+          // style={{ gap: isResponsive ? "0px" : "25px" }}
         >
           {/* //*Skills */}
           <div
@@ -1225,10 +1241,11 @@ export const TemplateTwo = ({
           </div>
         </div>
         {/* //*RightCol */}
-        <div className="flex flex-col items-start gap-1 justify-start w-[60%] ">
+        <div className="flex flex-col items-start gap-1 justify-between w-[60%] h-full">
           {/* //*Experience */}
           {experiences.length > 0 && (
             <RightColCardLayout
+              xs={xs}
               name="experience"
               arr={experiences}
               isHighlighted={isHighlighted}
@@ -1238,6 +1255,7 @@ export const TemplateTwo = ({
           {/* //*Projects */}
           {projects.length > 0 && (
             <RightColCardLayout
+              xs={xs}
               name="projects"
               arr={projects}
               isHighlighted={isHighlighted}
@@ -1246,7 +1264,10 @@ export const TemplateTwo = ({
           )}
         </div>
       </div>
-      <div className="flex flex-col items-start gap-1 justify-start w-full mt-5">
+      <div
+        style={{ marginTop: isResponsive ? "10px" : "100px" }}
+        className="flex flex-col items-start gap-1 justify-start w-full "
+      >
         {/* //*Experience */}
         {excessExperiences.length > 0 && (
           <RightColCardLayout
@@ -1271,7 +1292,7 @@ export const TemplateTwo = ({
     </div>
   );
 };
-export const TemplateThree = ({ size, notRes, isNotMarked, ref }: any) => {
+export const TemplateThree = ({ size, notRes, isNotMarked, ref, xs }: any) => {
   const { resumeData, isxs, color, activeStage, isOpen } = useGlobalContext();
 
   const data = resumeData;
@@ -1282,8 +1303,8 @@ export const TemplateThree = ({ size, notRes, isNotMarked, ref }: any) => {
       ref={ref}
       className={`w-full h-full bg-white flex items-center justify-start flex-col`}
       style={{
-        padding: isResponsive ? "20px" : "70px",
-        minHeight: isResponsive ? "100%" : "1100px",
+        padding: xs ? "1px" : isResponsive ? "20px" : "70px",
+        minHeight: isResponsive || xs ? "100%" : "1100px",
       }}
     >
       <div
@@ -1398,7 +1419,9 @@ export const TemplateThree = ({ size, notRes, isNotMarked, ref }: any) => {
       </div>
       {/* //*Objective */}
       <div
-        className={`w-full flex items-start justify-center gap-1 flex-col mt-2`}
+        className={`w-full flex items-start justify-center gap-${
+          xs ? 0 : 1
+        } flex-col mt-${xs ? 0 : 2}`}
         {...(activeStage == "summary" &&
           isHighlighted && {
             style: {
@@ -1428,7 +1451,9 @@ export const TemplateThree = ({ size, notRes, isNotMarked, ref }: any) => {
       </div>
       {/* //*Education */}
       <div
-        className={`w-full flex items-start justify-center gap-1 flex-col mt-2`}
+        className={`w-full flex items-start justify-center gap-${
+          xs ? 0 : 1
+        } flex-col mt-${xs ? 0 : 2}`}
         {...(activeStage == "education" &&
           isHighlighted && {
             style: {
@@ -1504,7 +1529,9 @@ export const TemplateThree = ({ size, notRes, isNotMarked, ref }: any) => {
       </div>
       {/* //*Skills */}
       <div
-        className={`w-full flex items-start justify-center gap-1 flex-col mt-2`}
+        className={`w-full flex items-start justify-center gap-${
+          xs ? 0 : 1
+        } flex-col mt-${xs ? 0 : 2}`}
         {...(activeStage == "skills" &&
           isHighlighted && {
             style: {
@@ -1581,7 +1608,9 @@ export const TemplateThree = ({ size, notRes, isNotMarked, ref }: any) => {
       </div>
       {/* //*Experience */}
       <div
-        className={`w-full flex items-start justify-center gap-1 flex-col mt-2`}
+        className={`w-full flex items-start justify-center gap-${
+          xs ? 0 : 1
+        } flex-col mt-${xs ? 0 : 2}`}
         {...(activeStage == "experience" &&
           isHighlighted && {
             style: {
@@ -1687,7 +1716,7 @@ export const TemplateThree = ({ size, notRes, isNotMarked, ref }: any) => {
     </div>
   );
 };
-export const TemplateFour = ({ size, notRes, isNotMarked, ref }: any) => {
+export const TemplateFour = ({ size, notRes, isNotMarked, ref, xs }: any) => {
   const { resumeData, isxs, color, activeStage, isOpen } = useGlobalContext();
 
   const data = resumeData;
@@ -1698,8 +1727,8 @@ export const TemplateFour = ({ size, notRes, isNotMarked, ref }: any) => {
       ref={ref}
       className={`w-full h-full bg-white flex items-center justify-start flex-col`}
       style={{
-        padding: isResponsive ? "20px" : "70px",
-        minHeight: isResponsive ? "100%" : "1100px",
+        padding: xs ? "1px" : isResponsive ? "20px" : "70px",
+        minHeight: isResponsive || xs ? "100%" : "1100px",
       }}
     >
       <div
@@ -1814,7 +1843,9 @@ export const TemplateFour = ({ size, notRes, isNotMarked, ref }: any) => {
       </div>
       {/* //*Objective */}
       <div
-        className={`w-full flex items-start justify-center gap-1 flex-col mt-2`}
+        className={`w-full flex items-start justify-center gap-${
+          xs ? 0 : 1
+        } flex-col mt-${xs ? 0 : 2}`}
         {...(activeStage == "summary" &&
           isHighlighted && {
             style: {
@@ -1844,7 +1875,9 @@ export const TemplateFour = ({ size, notRes, isNotMarked, ref }: any) => {
       </div>
       {/* //*Education */}
       <div
-        className={`w-full flex items-start justify-center gap-1 flex-col mt-2`}
+        className={`w-full flex items-start justify-center gap-${
+          xs ? 0 : 1
+        } flex-col mt-${xs ? 0 : 2}`}
         {...(activeStage == "education" &&
           isHighlighted && {
             style: {
@@ -1920,7 +1953,9 @@ export const TemplateFour = ({ size, notRes, isNotMarked, ref }: any) => {
       </div>
       {/* //*Skills */}
       <div
-        className={`w-full flex items-start justify-center gap-1 flex-col mt-2`}
+        className={`w-full flex items-start justify-center gap-${
+          xs ? 0 : 1
+        } flex-col mt-${xs ? 0 : 2}`}
         {...(activeStage == "skills" &&
           isHighlighted && {
             style: {
@@ -1997,7 +2032,9 @@ export const TemplateFour = ({ size, notRes, isNotMarked, ref }: any) => {
       </div>
       {/* //*Experience */}
       <div
-        className={`w-full flex items-start justify-center gap-1 flex-col mt-2`}
+        className={`w-full flex items-start justify-center gap-${
+          xs ? 0 : 1
+        } flex-col mt-${xs ? 0 : 2}`}
         {...(activeStage == "experience" &&
           isHighlighted && {
             style: {
@@ -2103,7 +2140,7 @@ export const TemplateFour = ({ size, notRes, isNotMarked, ref }: any) => {
     </div>
   );
 };
-export const TemplateFive = ({ size, notRes, isNotMarked, ref }: any) => {
+export const TemplateFive = ({ size, notRes, isNotMarked, ref, xs }: any) => {
   const { resumeData, isxs, color, activeStage, isOpen } = useGlobalContext();
 
   const data = resumeData;
@@ -2114,8 +2151,8 @@ export const TemplateFive = ({ size, notRes, isNotMarked, ref }: any) => {
       ref={ref}
       className={`w-full h-full bg-white flex items-center justify-start flex-col`}
       style={{
-        padding: isResponsive ? "20px" : "70px",
-        minHeight: isResponsive ? "100%" : "1100px",
+        padding: xs ? "1px" : isResponsive ? "20px" : "70px",
+        minHeight: isResponsive || xs ? "100%" : "1100px",
       }}
     >
       <div
@@ -2230,7 +2267,9 @@ export const TemplateFive = ({ size, notRes, isNotMarked, ref }: any) => {
       </div>
       {/* //*Objective */}
       <div
-        className={`w-full flex items-start justify-center gap-1 flex-col mt-2`}
+        className={`w-full flex items-start justify-center gap-${
+          xs ? 0 : 1
+        } flex-col mt-${xs ? 0 : 2}`}
         {...(activeStage == "summary" &&
           isHighlighted && {
             style: {
@@ -2260,7 +2299,9 @@ export const TemplateFive = ({ size, notRes, isNotMarked, ref }: any) => {
       </div>
       {/* //*Education */}
       <div
-        className={`w-full flex items-start justify-center gap-1 flex-col mt-2`}
+        className={`w-full flex items-start justify-center gap-${
+          xs ? 0 : 1
+        } flex-col mt-${xs ? 0 : 2}`}
         {...(activeStage == "education" &&
           isHighlighted && {
             style: {
@@ -2336,7 +2377,9 @@ export const TemplateFive = ({ size, notRes, isNotMarked, ref }: any) => {
       </div>
       {/* //*Skills */}
       <div
-        className={`w-full flex items-start justify-center gap-1 flex-col mt-2`}
+        className={`w-full flex items-start justify-center gap-${
+          xs ? 0 : 1
+        } flex-col mt-${xs ? 0 : 2}`}
         {...(activeStage == "skills" &&
           isHighlighted && {
             style: {
@@ -2413,7 +2456,9 @@ export const TemplateFive = ({ size, notRes, isNotMarked, ref }: any) => {
       </div>
       {/* //*Experience */}
       <div
-        className={`w-full flex items-start justify-center gap-1 flex-col mt-2`}
+        className={`w-full flex items-start justify-center gap-${
+          xs ? 0 : 1
+        } flex-col mt-${xs ? 0 : 2}`}
         {...(activeStage == "experience" &&
           isHighlighted && {
             style: {
@@ -2519,7 +2564,7 @@ export const TemplateFive = ({ size, notRes, isNotMarked, ref }: any) => {
     </div>
   );
 };
-export const TemplateSix = ({ size, notRes, isNotMarked, ref }: any) => {
+export const TemplateSix = ({ size, notRes, isNotMarked, ref, xs }: any) => {
   const { resumeData, isxs, color, activeStage, isOpen } = useGlobalContext();
 
   const data = resumeData;
@@ -2530,8 +2575,8 @@ export const TemplateSix = ({ size, notRes, isNotMarked, ref }: any) => {
       ref={ref}
       className={`w-full h-full bg-white flex items-center justify-start flex-col`}
       style={{
-        padding: isResponsive ? "20px" : "70px",
-        minHeight: isResponsive ? "100%" : "1100px",
+        padding: xs ? "1px" : isResponsive ? "20px" : "70px",
+        minHeight: isResponsive || xs ? "100%" : "1100px",
       }}
     >
       <div
@@ -2646,7 +2691,9 @@ export const TemplateSix = ({ size, notRes, isNotMarked, ref }: any) => {
       </div>
       {/* //*Objective */}
       <div
-        className={`w-full flex items-start justify-center gap-1 flex-col mt-2`}
+        className={`w-full flex items-start justify-center gap-${
+          xs ? 0 : 1
+        } flex-col mt-${xs ? 0 : 2}`}
         {...(activeStage == "summary" &&
           isHighlighted && {
             style: {
@@ -2676,7 +2723,9 @@ export const TemplateSix = ({ size, notRes, isNotMarked, ref }: any) => {
       </div>
       {/* //*Education */}
       <div
-        className={`w-full flex items-start justify-center gap-1 flex-col mt-2`}
+        className={`w-full flex items-start justify-center gap-${
+          xs ? 0 : 1
+        } flex-col mt-${xs ? 0 : 2}`}
         {...(activeStage == "education" &&
           isHighlighted && {
             style: {
@@ -2752,7 +2801,9 @@ export const TemplateSix = ({ size, notRes, isNotMarked, ref }: any) => {
       </div>
       {/* //*Skills */}
       <div
-        className={`w-full flex items-start justify-center gap-1 flex-col mt-2`}
+        className={`w-full flex items-start justify-center gap-${
+          xs ? 0 : 1
+        } flex-col mt-${xs ? 0 : 2}`}
         {...(activeStage == "skills" &&
           isHighlighted && {
             style: {
@@ -2829,7 +2880,9 @@ export const TemplateSix = ({ size, notRes, isNotMarked, ref }: any) => {
       </div>
       {/* //*Experience */}
       <div
-        className={`w-full flex items-start justify-center gap-1 flex-col mt-2`}
+        className={`w-full flex items-start justify-center gap-${
+          xs ? 0 : 1
+        } flex-col mt-${xs ? 0 : 2}`}
         {...(activeStage == "experience" &&
           isHighlighted && {
             style: {
@@ -2942,56 +2995,75 @@ export const Templates = [
     resume_template: (
       size: string | null,
       isNotMarked?: boolean,
-      ref?: HTMLDivElement | null
-    ) => <TemplateOne size={size} isNotMarked={isNotMarked} ref={ref} />,
+      ref?: HTMLDivElement | null,
+      xs?: boolean
+    ) => (
+      <TemplateOne size={size} isNotMarked={isNotMarked} ref={ref} xs={xs} />
+    ),
   },
   {
     id: 2,
     resume_template: (
       size: string | null,
       isNotMarked?: boolean,
-      ref?: HTMLDivElement | null
-    ) => <TemplateTwo size={size} isNotMarked={isNotMarked} ref={ref} />,
+      ref?: HTMLDivElement | null,
+      xs?: boolean
+    ) => (
+      <TemplateTwo size={size} isNotMarked={isNotMarked} ref={ref} xs={xs} />
+    ),
   },
   {
     id: 3,
     resume_template: (
       size: string | null,
       isNotMarked?: boolean,
-      ref?: HTMLDivElement | null
-    ) => <TemplateThree size={size} isNotMarked={isNotMarked} ref={ref} />,
+      ref?: HTMLDivElement | null,
+      xs?: boolean
+    ) => (
+      <TemplateThree size={size} isNotMarked={isNotMarked} ref={ref} xs={xs} />
+    ),
   },
   {
     id: 4,
     resume_template: (
       size: string | null,
       isNotMarked?: boolean,
-      ref?: HTMLDivElement | null
-    ) => <TemplateFour size={size} isNotMarked={isNotMarked} ref={ref} />,
+      ref?: HTMLDivElement | null,
+      xs?: boolean
+    ) => (
+      <TemplateFour size={size} isNotMarked={isNotMarked} ref={ref} xs={xs} />
+    ),
   },
   {
     id: 5,
     resume_template: (
       size: string | null,
       isNotMarked?: boolean,
-      ref?: HTMLDivElement | null
-    ) => <TemplateFive size={size} isNotMarked={isNotMarked} ref={ref} />,
+      ref?: HTMLDivElement | null,
+      xs?: boolean
+    ) => (
+      <TemplateFive size={size} isNotMarked={isNotMarked} ref={ref} xs={xs} />
+    ),
   },
   {
     id: 6,
     resume_template: (
       size: string | null,
       isNotMarked?: boolean,
-      ref?: HTMLDivElement | null
-    ) => <TemplateSix size={size} isNotMarked={isNotMarked} ref={ref} />,
+      ref?: HTMLDivElement | null,
+      xs?: boolean
+    ) => (
+      <TemplateSix size={size} isNotMarked={isNotMarked} ref={ref} xs={xs} />
+    ),
   },
 ];
 export const getTemplateByID = (
   id: any,
   size: string,
   isNotMarked?: boolean,
-  ref?: HTMLDivElement | null
+  ref?: HTMLDivElement | null,
+  xs?: boolean
 ) => {
   const resume = Templates.find((i) => i.id == id);
-  return resume?.resume_template(size, isNotMarked, ref);
+  return resume?.resume_template(size, isNotMarked, ref, xs);
 };
