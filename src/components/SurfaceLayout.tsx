@@ -20,7 +20,7 @@ export default function SurfaceLayout({ children, bg }: Props) {
         >
           <Image
             className="dark:invert"
-            src={bg ? "/JersCV-dark.svg" : "/JersCV.svg"}
+            src={bg ? "/JersCV-Dark.svg" : "/JersCV.svg"}
             alt="Next.js logo"
             width={120}
             height={30}
