@@ -35,9 +35,9 @@ export default function InputContainer({ activeStage }: Props) {
   const handleFormData = (key: string, value: any) => {
     setinputDatas((prev: any) => ({ ...prev, [key]: value }));
   };
-  const handleVisibility = (state: any) => {
-    handleFormData("isVisible", state);
-  };
+  // const handleVisibility = (state: any) => {
+  //   handleFormData("isVisible", state);
+  // };
   const handleOnchange = (e: any) => {
     const { name, value } = e.target;
     handleFormData(name, value);

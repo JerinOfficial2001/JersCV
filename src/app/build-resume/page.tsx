@@ -204,9 +204,9 @@ export default function BuildResume() {
         setactiveStage("headers");
     }
   };
-  const handleReset = () => {
-    setActiveStep(0);
-  };
+  // const handleReset = () => {
+  //   setActiveStep(0);
+  // };
   const steps: Step[] = [
     {
       label: "Headers",
