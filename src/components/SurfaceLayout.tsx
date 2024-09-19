@@ -13,7 +13,7 @@ export default function SurfaceLayout({ children, bg }: Props) {
       {pathname != "/build-resume" && (
         <div
           className="sticky top-0 p-7 w-full flex flex-row justify-between items-start cursor-pointer"
-          style={{ zIndex: 1, background: bg ? bg : "white" }}
+          style={{ zIndex: 2, background: bg ? bg : "white" }}
           onClick={() => {
             router.push("/");
           }}

@@ -25,7 +25,7 @@ export default function ChangeTemplateModal({ open, handleClose }: Props) {
             sx={{
               width: {
                 xs: "95%",
-                md: "70%",
+                md: "80%",
               },
             }}
             className="flex flex-row items-start bg-white rounded-md relative m-auto h-[100%] "

@@ -25,8 +25,8 @@ export default function FinalResume() {
   return (
     <SurfaceLayout bg="#383838">
       {isClient ? (
-        <div className="w-full flex flex-row justify-center items-start bg-[#383838] p-5 relative">
-          <div className="w-[25%] h-full sticky top-20">
+        <div className="w-full flex flex-row justify-center items-start bg-[#383838] p-5 relative ">
+          <div className="w-[25%] h-full sticky top-20 ">
             <ResumeToolBar />
           </div>
           <div className="w-[50%]">

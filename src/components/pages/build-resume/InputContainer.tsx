@@ -7,19 +7,21 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import Input from "./Input";
 import { Add, Delete, Edit } from "@mui/icons-material";
 import SkillsContainer from "./SkillContainer";
 import { useGlobalContext } from "@/utils/providers";
+import { getResumeByID } from "./ResumeTemplates";
 
 type Props = {
   // inputDatas: any;
   // setinputDatas: React.Dispatch<React.SetStateAction<InputData>>;
   activeStage: string;
+  id: any;
 };
-export default function InputContainer({ activeStage }: Props) {
+export default function InputContainer({ activeStage, id }: Props) {
   const {
     inputDatas,
     setinputDatas,
@@ -31,7 +33,10 @@ export default function InputContainer({ activeStage }: Props) {
     setskills,
     education,
     seteducation,
+    tools,
+    settools,
   } = useGlobalContext();
+  const [image, setimage] = useState("");
   const handleFormData = (key: string, value: any) => {
     setinputDatas((prev: any) => ({ ...prev, [key]: value }));
   };
@@ -39,14 +44,22 @@ export default function InputContainer({ activeStage }: Props) {
     handleFormData("isVisible", state);
   };
   const handleOnchange = (e: any) => {
-    const { name, value } = e.target;
-    handleFormData(name, value);
+    const { name, value, files } = e.target;
+    if (name == "image") {
+      setimage(value);
+      handleFormData(name, files[0]);
+    } else {
+      handleFormData(name, value);
+    }
   };
   const handleEducationData = (key: string, value: any) => {
     seteducation((prev: any) => ({ ...prev, [key]: value }));
   };
   const handleSkillsData = (key: string, value: any) => {
     setskills((prev: any) => ({ ...prev, [key]: value }));
+  };
+  const handleToolsData = (key: string, value: any) => {
+    settools(value);
   };
   const handleExperienceData = (key: string, value: any) => {
     setexperience((prev: any) => ({ ...prev, [key]: value }));
@@ -58,6 +71,10 @@ export default function InputContainer({ activeStage }: Props) {
   const handleSkillsOnchange = (e: any) => {
     const { name, value } = e.target;
     handleSkillsData(name, value);
+  };
+  const handleToolsOnchange = (e: any) => {
+    const { name, value } = e.target;
+    handleToolsData(name, value);
   };
   const handleExperienceOnchange = (e: any) => {
     const { name, value } = e.target;
@@ -79,6 +96,14 @@ export default function InputContainer({ activeStage }: Props) {
         department: "",
         percentage: "",
       });
+    } else {
+      toast.error("Missing mandatory field");
+    }
+  };
+  const handleSubmitTools = (value: any) => {
+    if (tools !== "") {
+      inputDatas.tools?.push(tools);
+      settools(value);
     } else {
       toast.error("Missing mandatory field");
     }
@@ -135,7 +160,19 @@ export default function InputContainer({ activeStage }: Props) {
       toast.error("Missing mandatory field");
     }
   };
+  const resume = getResumeByID(id);
+
   const inputArray = [
+    {
+      isvisible: resume?.isPhoto == "photo" && "headers",
+      name: "image",
+      label: "Image",
+      placeholder: "eg : John",
+      type: "file",
+      onChange: handleOnchange,
+      value: image,
+      width: "1",
+    },
     {
       isvisible: "headers",
       name: "name",
@@ -236,6 +273,7 @@ export default function InputContainer({ activeStage }: Props) {
       value: inputDatas.country,
       width: "2",
     },
+
     {
       isvisible: "summary",
       name: "about",
@@ -246,6 +284,36 @@ export default function InputContainer({ activeStage }: Props) {
       value: inputDatas.about,
       width: "1",
       mode: "big",
+    },
+    {
+      isvisible: "summary",
+      name: "skills",
+      label: "Tools",
+      placeholder: "Tools",
+      type: "text",
+      onChange: handleOnchange,
+      value: [],
+      width: "1",
+      mode: "expandable",
+      subInput: [
+        {
+          isvisible: "skills",
+          name: "tools",
+          label: "Tools",
+          placeholder: "eg : VScode,Eclipse,Androidstudio,Figma etc...",
+          type: "text",
+          onChange: handleToolsOnchange,
+          value: tools,
+          arrValue: inputDatas.tools,
+          width: "1",
+        },
+      ],
+      submitHandler: (key: any) => handleSubmitTools(key),
+      handleUpdatedData: (name: string, data: any) =>
+        handleFormData("tools", {
+          ...inputDatas.tools,
+          [name]: data,
+        }),
     },
     {
       isvisible: "education",

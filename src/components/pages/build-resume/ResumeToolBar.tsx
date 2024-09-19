@@ -27,7 +27,7 @@ export default function ResumeToolBar({
           justifyContent: "center",
           width: "100%",
           paddingBottom: "40px",
-          height: { xs: "", md: "540px" },
+          height: { xs: "", md: "480px" },
           overflowY: "scroll",
           boxShadow: resumeID
             ? "inset 0 -10px 10px -10px gray"

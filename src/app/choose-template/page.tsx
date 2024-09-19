@@ -21,7 +21,27 @@ export default function ChooseTemplate() {
     Cookies.remove("resumeData");
     Cookies.remove("completed");
   }, []);
+  const [inputDatas, setinputDatas] = useState({
+    columns: "none",
+    photo: "none",
+  });
+  const handleOnchange = (value: string, name: string) => {
+    // const { name, value } = e.target;
+    setinputDatas((prev) => ({ ...prev, [name]: value }));
+  };
+  const filteredResumes = (photo: string, column: string) => {
+    let isPhoto: string | boolean;
+    let isColumn: string | boolean;
+    photo == "none" ? (isPhoto = false) : (isPhoto = photo);
+    column == "none" ? (isColumn = false) : (isColumn = column);
 
+    const resumes = Templates.filter(
+      isPhoto && isColumn
+        ? (elem) => isPhoto == elem.isPhoto && elem.type == isColumn
+        : (elem) => isPhoto == elem.isPhoto || elem.type == isColumn
+    );
+    return !isPhoto && !isColumn ? Templates : resumes;
+  };
   return (
     <SurfaceLayout>
       {isClient ? (
@@ -71,11 +91,27 @@ export default function ChooseTemplate() {
               <div className="flex flex-row justify-between items-center gap-5">
                 <SelectInput
                   label="Headshot"
-                  menus={[{ value: "With Photo" }, { value: "Without Photo" }]}
+                  menus={[
+                    { label: "With Photo", value: "photo" },
+                    { label: "Without Photo", value: "no_photo" },
+                    { label: "All", value: "none" },
+                  ]}
+                  onChange={(value: string, name: string) =>
+                    handleOnchange(value, name)
+                  }
+                  name="photo"
+                  value={inputDatas.photo}
                 />
                 <SelectInput
                   label="Columns"
-                  menus={[{ value: "1 Column" }, { value: "2 Columns" }]}
+                  menus={[
+                    { label: "1 Column", value: "one_column" },
+                    { label: "2 Columns", value: "two_column" },
+                    { label: "All", value: "none" },
+                  ]}
+                  onChange={handleOnchange}
+                  name="columns"
+                  value={inputDatas.columns}
                 />
               </div>
               <div className="flex flex-row items-center justify-center gap-1 ">
@@ -94,7 +130,8 @@ export default function ChooseTemplate() {
             className="w-[70%] flex flex-col gap-2 "
           >
             <p className="mt-2 text-[13px] font-[family-name:var(--font-geist-mono)]">
-              Showing all templates ({Templates.length})
+              Showing all templates (
+              {filteredResumes(inputDatas.photo, inputDatas.columns)?.length})
             </p>
             <Grid
               container
@@ -105,13 +142,15 @@ export default function ChooseTemplate() {
                 paddingBottom: "40px",
               }}
             >
-              {Templates.map((elem, index) => {
-                return (
-                  <Grid key={index} xs={12} md={3.5}>
-                    <ResumeCard resume={elem} hideoverflow={true} />
-                  </Grid>
-                );
-              })}
+              {filteredResumes(inputDatas.photo, inputDatas.columns)?.map(
+                (elem, index) => {
+                  return (
+                    <Grid key={index} xs={12} md={3.5}>
+                      <ResumeCard resume={elem} hideoverflow={true} />
+                    </Grid>
+                  );
+                }
+              )}
             </Grid>
           </Box>
         </div>

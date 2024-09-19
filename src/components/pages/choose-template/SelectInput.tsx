@@ -9,12 +9,31 @@ import React from "react";
 
 interface Menus {
   value: string;
+  label: string;
 }
-type Props = { menus: Menus[]; label: string };
+type Props = {
+  menus: Menus[];
+  label: string;
+  onChange: any;
+  name: string;
+  value: string;
+};
 
-export default function SelectInput({ menus, label }: Props) {
+export default function SelectInput({
+  menus,
+  label,
+  onChange,
+  name,
+  value,
+}: Props) {
   return (
-    <Select>
+    <Select
+      onValueChange={(value) => {
+        onChange(value, name);
+      }}
+      value={value}
+      name={name}
+    >
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder={label} />
       </SelectTrigger>
@@ -22,7 +41,7 @@ export default function SelectInput({ menus, label }: Props) {
         {menus.map((elem: Menus, index: number) => {
           return (
             <SelectItem key={index} value={elem?.value}>
-              {elem?.value}
+              {elem?.label}
             </SelectItem>
           );
         })}

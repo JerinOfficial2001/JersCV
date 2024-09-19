@@ -18,6 +18,7 @@ export default function Providers({ children }: Props) {
   const [inputDatas, setinputDatas] = useState<any>({
     _id: "",
     name: "",
+    image: "",
     last_name: "",
     role: "",
     mail: "",
@@ -42,6 +43,7 @@ export default function Providers({ children }: Props) {
   });
   const resetInputField = () => {
     setinputDatas({
+      image: "",
       _id: "",
       name: "",
       last_name: "",
@@ -79,6 +81,7 @@ export default function Providers({ children }: Props) {
     soft: "",
     language: "",
   });
+  const [tools, settools] = useState("");
   const [experience, setexperience] = useState<any>({
     from: "",
     to: "",
@@ -95,6 +98,7 @@ export default function Providers({ children }: Props) {
     _id: Math.random().toString(36).substr(2, 8),
     isVisible: false,
     name: inputDatas.name || "John",
+    image: inputDatas.image || "",
     last_name: inputDatas.last_name || "Sam",
     role: inputDatas.role || "Frondend Developer",
     mail: inputDatas.mail || "abc@gmail.com",
@@ -219,6 +223,8 @@ export default function Providers({ children }: Props) {
       {isClient ? (
         <GlobalContext.Provider
           value={{
+            tools,
+            settools,
             resumeData,
             isSm,
             isXs,

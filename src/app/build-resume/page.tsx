@@ -399,7 +399,7 @@ export default function BuildResume() {
                 </p>
               </Suspense>
             </Box>
-            {!isOpen && <InputContainer activeStage={activeStage} />}
+            {!isOpen && <InputContainer activeStage={activeStage} id={id} />}
 
             <div className="sticky bottom-0 flex flex-row justify-between items-center p-3">
               <CVButton
