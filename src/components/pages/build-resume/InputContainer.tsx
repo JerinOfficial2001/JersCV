@@ -40,9 +40,9 @@ export default function InputContainer({ activeStage, id }: Props) {
   const handleFormData = (key: string, value: any) => {
     setinputDatas((prev: any) => ({ ...prev, [key]: value }));
   };
-  const handleVisibility = (state: any) => {
-    handleFormData("isVisible", state);
-  };
+  // const handleVisibility = (state: any) => {
+  //   handleFormData("isVisible", state);
+  // };
   const handleOnchange = (e: any) => {
     const { name, value, files } = e.target;
     if (name == "image") {

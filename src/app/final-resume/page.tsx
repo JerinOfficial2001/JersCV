@@ -48,6 +48,7 @@ export default function FinalResume() {
                 if (elem.name == "Print") {
                   return (
                     <ReactToPrint
+                      key={index}
                       trigger={() => {
                         return (
                           <Box

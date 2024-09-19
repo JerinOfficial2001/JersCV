@@ -2,8 +2,6 @@ import { useGlobalContext } from "@/utils/providers";
 import { Tooltip, TooltipProps, styled, tooltipClasses } from "@mui/material";
 import React from "react";
 
-type Props = {};
-
 export const BootstrapTooltip = styled(
   ({ className, ...props }: TooltipProps) => {
     const { isXs, isSm } = useGlobalContext();
