@@ -42,7 +42,7 @@ export default function SkillsContainer({ data, handleFormData }: Props) {
           color="info"
           sx={{ color: "white" }}
           onDelete={() => {
-            const newData = data.filter((i: any) => i !== text);
+            const newData = data.filter((i: any) => i != text);
             handleFormData(newData);
           }}
         />

@@ -1427,6 +1427,8 @@ export const TemplateThree = ({ size, notRes, isNotMarked, ref, xs }: any) => {
                 border: "4px solid white",
                 height: xs ? "50px" : isResponsive ? "70px" : "200px",
                 width: xs ? "50px" : isResponsive ? "70px" : "200px",
+                objectFit: "cover",
+                objectPosition: "center",
               }}
             />
           </div>
@@ -2100,6 +2102,8 @@ export const TemplateFour = ({ size, notRes, isNotMarked, ref, xs }: any) => {
                 border: `4px solid ${color}`,
                 height: xs ? "50px" : isResponsive ? "100px" : "280px",
                 width: xs ? "50px" : isResponsive ? "100px" : "280px",
+                objectFit: "cover",
+                objectPosition: "center",
               }}
             />
           </div>
@@ -2728,6 +2732,8 @@ export const TemplateFive = ({ size, notRes, isNotMarked, ref, xs }: any) => {
               border: `4px solid ${color}`,
               height: xs ? "50px" : isResponsive ? "70px" : "200px",
               width: xs ? "50px" : isResponsive ? "70px" : "200px",
+              objectFit: "cover",
+              objectPosition: "center",
             }}
           />
         </div>

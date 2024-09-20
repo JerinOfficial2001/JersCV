@@ -103,7 +103,7 @@ export default function InputContainer({ activeStage, id }: Props) {
   const handleSubmitTools = (value: any) => {
     if (tools !== "") {
       inputDatas.tools?.push(tools);
-      settools(value);
+      settools("");
     } else {
       toast.error("Missing mandatory field");
     }
@@ -286,7 +286,8 @@ export default function InputContainer({ activeStage, id }: Props) {
       mode: "big",
     },
     {
-      isvisible: "summary",
+      isvisible:
+        resume?.isPhoto == "photo" && resume?.type == "two_column" && "summary",
       name: "skills",
       label: "Tools",
       placeholder: "Tools",
@@ -310,10 +311,7 @@ export default function InputContainer({ activeStage, id }: Props) {
       ],
       submitHandler: (key: any) => handleSubmitTools(key),
       handleUpdatedData: (name: string, data: any) =>
-        handleFormData("tools", {
-          ...inputDatas.tools,
-          [name]: data,
-        }),
+        handleFormData(name, data),
     },
     {
       isvisible: "education",
