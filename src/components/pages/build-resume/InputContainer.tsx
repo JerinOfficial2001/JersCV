@@ -100,7 +100,7 @@ export default function InputContainer({ activeStage, id }: Props) {
       toast.error("Missing mandatory field");
     }
   };
-  const handleSubmitTools = (value: any) => {
+  const handleSubmitTools = () => {
     if (tools !== "") {
       inputDatas.tools?.push(tools);
       settools("");
@@ -309,7 +309,7 @@ export default function InputContainer({ activeStage, id }: Props) {
           width: "1",
         },
       ],
-      submitHandler: (key: any) => handleSubmitTools(key),
+      submitHandler:handleSubmitTools,
       handleUpdatedData: (name: string, data: any) =>
         handleFormData(name, data),
     },
